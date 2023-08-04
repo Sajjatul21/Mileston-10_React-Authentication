@@ -10,6 +10,7 @@ const Login = () => {
     return (
         <div>
             <button onClick={handleGoogleSignIn}>Google login</button>
+            {/* 58-4 Open google login popup and recap google popup sing up */}
         </div>
     );
 };
