@@ -11,5 +11,5 @@
     * 10. create const auth = getAuth(app)
     * 11. import googleAuthProvider and crete a new providers
     * 12. use signInWithPopup and pass auth and provider
-    
+    * 13. activate sign-in method (google, facebook, github, etc.)
 */
