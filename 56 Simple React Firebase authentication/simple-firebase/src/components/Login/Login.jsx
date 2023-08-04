@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import app from '../../firebase/firebase.init';
 const Login = () => {
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState(null);
     const auth = getAuth(app);
     // console.log(app);
     const provider = new GoogleAuthProvider();
