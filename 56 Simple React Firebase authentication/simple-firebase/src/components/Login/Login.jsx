@@ -22,6 +22,18 @@ const Login = () => {
             });
     };
 
+    const handleGithubSignIn = () => {
+        signInWithPopup(auth, githubProvider)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                setUser(loggedUser);
+            })
+            .catch(error => {
+                console.log(error.message);
+            });
+    };
+
     const handleSignOut = () => {
         signOut(auth)
             .then(result => {
@@ -40,7 +52,7 @@ const Login = () => {
                     <button onClick={handleSignOut}>Sign Out</button> :
                     <>
                         <button onClick={handleGoogleSignIn}>Google login</button>
-                        <button >GitHub Login</button>
+                        <button onClick={handleGithubSignIn}>GitHub Login</button>
                     </>
             }
             {
