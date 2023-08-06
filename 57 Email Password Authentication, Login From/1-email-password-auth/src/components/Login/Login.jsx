@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
 import app from '../firebase/firebase.config';
+import { Link } from 'react-router-dom';
 
 
 
@@ -58,11 +59,12 @@ const Login = () => {
                 </div>
                 <div className="mb-3 form-check">
                     <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                    <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
             <p className='text-danger'>{error}</p>
+            <p><small>New to this website? Please <Link to='/register'>Register</Link></small></p>
         </div>
     );
 };
