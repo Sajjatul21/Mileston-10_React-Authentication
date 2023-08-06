@@ -24,4 +24,4 @@ const RegisterBS = () => {
 
 export default RegisterBS;
 
-/* 59-4 Create new user using email and password on firebase */
+/* 59-4 Create new user using email and password on firebase */ 

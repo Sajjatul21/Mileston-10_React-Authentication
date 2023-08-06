@@ -23,14 +23,14 @@ const Register = () => {
     };
 
     return (
-        <div>
+        <div className='w-50 mx-auto'>
             <h2>Please Register</h2>
             <form onSubmit={handleSubmit}>
-                <input onChange={handleEmailChange} type="email" name="email" id="email" placeholder='Your email' />
+                <input className='w-50 rounded mb-2 ps-2' onChange={handleEmailChange} type="email" name="email" id="email" placeholder='Your email' />
                 <br />
-                <input onBlur={handlePasswordBlur} type="password" name="password" id="password" placeholder='Your password' />
+                <input className='w-50 rounded mb-2 ps-2' onBlur={handlePasswordBlur} type="password" name="password" id="password" placeholder='Your password' />
                 <br />
-                <input type="submit" value="Register" />
+                <input className='btn btn-primary' type="submit" value="Register" />
             </form>
         </div>
     );
