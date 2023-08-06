@@ -24,9 +24,25 @@ const Register = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        // setSuccess('');
+        setSuccess('');
+        setError('');
         const email = event.target.email.value;
         const password = event.target.password.value;
+
+        /*google search: Regex to validation password strength/ password validation regular expression (https://stackoverflow.com/questions/5142103/regex-to-validate-password-strength) */
+        // validation
+        if (!/(?=.*[A-Z])/.test(password)) {
+            setError('Please add at least one uppercase');
+            return;
+        }
+        else if (!/(?=.*[0-9].*[0-9])/.test(password)) {
+            setError('Please add at least to numbers');
+            return;
+        }
+        else if (password.length < 6) {
+            setError('Please add at least 6 characters in your passwords');
+            return;
+        }
 
         /* create user in firebase */
         createUserWithEmailAndPassword(auth, email, password)
@@ -36,9 +52,7 @@ const Register = () => {
                 setError('');
                 event.target.reset();
                 setSuccess('User has been created successfully');
-                setTimeout(() => {
-                    setSuccess('');
-                }, 2000);
+                // setInterval(() => setSuccess(''), 3000);
             })
             .catch(error => {
                 console.error(error.message);
