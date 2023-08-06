@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
@@ -29,6 +29,7 @@ const Register = () => {
         setError('');
         const email = event.target.email.value;
         const password = event.target.password.value;
+        console.log(email, password);
 
         /*google search: Regex to validation password strength/ password validation regular expression (https://stackoverflow.com/questions/5142103/regex-to-validate-password-strength) */
         // validation
@@ -37,7 +38,7 @@ const Register = () => {
             return;
         }
         else if (!/(?=.*[0-9].*[0-9])/.test(password)) {
-            setError('Please add at least to numbers');
+            setError('Please add at least two numbers');
             return;
         }
         else if (!/(?=.*[!@#$%^&*])/.test(password)) {
@@ -58,10 +59,20 @@ const Register = () => {
                 event.target.reset();
                 setSuccess('User has been created successfully');
                 // setInterval(() => setSuccess(''), 3000);
+                sendVerificationEmail(loggedUser);
             })
             .catch(error => {
                 console.error(error.message);
                 setError(error.message);
+            });
+    };
+
+
+    const sendVerificationEmail = (user) => {
+        sendEmailVerification(user)
+            .then(result => {
+                console.log(result);
+                alert('please verify your email');
             });
 
     };

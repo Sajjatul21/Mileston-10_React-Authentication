@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import app from '../firebase/firebase.config';
 import { Link } from 'react-router-dom';
@@ -32,9 +32,10 @@ const Login = () => {
         else if (password.length < 6) {
             setError('Password must be 6 characters');
         }
-        createUserWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password)
             .then(result => {
                 const loggedUser = result.user;
+                console.log(loggedUser);
                 setSuccess('User Login Success');
                 setError('');
             })
