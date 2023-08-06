@@ -9,7 +9,9 @@ const auth = getAuth(app);
 
 const Register = () => {
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [email, setEmail] = useState('');
+
     const handleEmailChange = (event) => {
         // console.log(event);
         // console.log(event.target.value);
@@ -22,6 +24,7 @@ const Register = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
+        // setSuccess('');
         const email = event.target.email.value;
         const password = event.target.password.value;
 
@@ -32,6 +35,10 @@ const Register = () => {
                 console.log(loggedUser);
                 setError('');
                 event.target.reset();
+                setSuccess('User has been created successfully');
+                setTimeout(() => {
+                    setSuccess('');
+                }, 2000);
             })
             .catch(error => {
                 console.error(error.message);
@@ -51,6 +58,7 @@ const Register = () => {
                 <input className='btn btn-primary' type="submit" value="Register" />
             </form>
             <p className='text-danger'><small>{error}</small></p>
+            <p className="text-success">{success}</p>
         </div>
     );
 };
