@@ -5,17 +5,22 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const handleEmailChange = (event) => {
         // console.log(event);
-        console.log(event.target.value);
+        // console.log(event.target.value);
         setEmail(event.target.value);
     };
 
     const handlePasswordBlur = event => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
     };
+
+    const handleSubmit = event => {
+        console.log(event.target);
+    };
+
     return (
         <div>
             <h2>Please Register</h2>
-            <form >
+            <form onSubmit={handleSubmit}>
                 <input onChange={handleEmailChange} type="email" name="email" id="email" placeholder='Your email' />
                 <br />
                 <input onBlur={handlePasswordBlur} type="password" name="password" id="password" placeholder='Your password' />
