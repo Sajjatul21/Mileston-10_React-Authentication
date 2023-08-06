@@ -22,7 +22,7 @@ const Login = () => {
         setError('');     // আমরা যদি এখানে empty string না দেই তখন আমরা যখন password validation এর বাহিরে password দিব তখন  তো আমাদরে error দেখবে তারপর আমরা যখস তা ঠিক করবো তখন সে error টাকে state এ রেখে দিবে তখন আমরা correct password দিলেও সে error যাবে না তাই যখন error না পাবে তখন  আমরা state টা empty string করে দিব।
         setSuccess('');
         if (!/(?=.*[A-Z])/.test(password)) {
-            setError('Please add at least two uppercase');
+            setError('Please add at least one uppercase');
             return;
         }
         else if (!/(?=.*[!@#$%^&*])/.test(password)) {

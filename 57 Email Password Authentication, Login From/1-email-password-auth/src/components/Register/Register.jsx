@@ -40,6 +40,10 @@ const Register = () => {
             setError('Please add at least to numbers');
             return;
         }
+        else if (!/(?=.*[!@#$%^&*])/.test(password)) {
+            setError('Please add a special character.');
+            return;
+        }
         else if (password.length < 6) {
             setError('Please add at least 6 characters in your passwords');
             return;
