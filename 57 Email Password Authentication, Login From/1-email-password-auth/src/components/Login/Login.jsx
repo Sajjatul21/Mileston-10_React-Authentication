@@ -1,4 +1,10 @@
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
+import app from '../firebase/firebase.config';
+
+
+
+const auth = getAuth(app);
 
 const Login = () => {
     const [error, setError] = useState('');
@@ -25,6 +31,15 @@ const Login = () => {
         else if (password.length < 6) {
             setError('Password must be 6 characters');
         }
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                const loggedUser = result.user;
+                setSuccess('User Login Success');
+                setError('');
+            })
+            .catch(error => {
+                setError(error.message);
+            });
 
     };
 
@@ -54,4 +69,4 @@ const Login = () => {
 
 export default Login;
 
-// 59-6 (Recap) Create Login page and recap validation
+// 59-7 Sign In, Login, Toggle Registration and login, Handle Email Verification
