@@ -31,6 +31,7 @@ const Register = () => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
                 setError('');
+                event.target.reset();
             })
             .catch(error => {
                 console.error(error.message);
