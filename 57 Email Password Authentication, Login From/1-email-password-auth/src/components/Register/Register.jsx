@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updatePassword, updateProfile } from 'firebase/auth';
 import app from '../firebase/firebase.config';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 
 
@@ -27,9 +27,10 @@ const Register = () => {
         event.preventDefault();
         setSuccess('');
         setError('');
+        const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
-        console.log(email, password);
+        console.log(name, email, password);
 
         /*google search: Regex to validation password strength/ password validation regular expression (https://stackoverflow.com/questions/5142103/regex-to-validate-password-strength) */
         // validation
@@ -60,6 +61,8 @@ const Register = () => {
                 setSuccess('User has been created successfully');
                 // setInterval(() => setSuccess(''), 3000);
                 sendVerificationEmail(loggedUser);
+                // updateUserData(loggedUser, name);
+                updateUserData(loggedUser, name);
             })
             .catch(error => {
                 console.error(error.message);
@@ -76,10 +79,25 @@ const Register = () => {
             });
     };
 
+    const updateUserData = (user, name) => {
+        updateProfile(user, {
+            displayName: name
+        })
+            .then(() => {
+                console.log('Update user data');
+            })
+            .catch(error => {
+                setError(error);
+            });
+    };
+
+
     return (
         <div className='w-50 mx-auto'>
             <h2>Please Register</h2>
             <form onSubmit={handleSubmit}>
+                <input className='w-50 rounded mb-2 ps-2' type="text" name="name" id="name" placeholder='Your name' required />
+                <br />
                 <input className='w-50 rounded mb-2 ps-2' onChange={handleEmailChange} type="email" name="email" id="email" placeholder='Your email' required />
                 <br />
                 <input className='w-50 rounded mb-2 ps-2' onBlur={handlePasswordBlur} type="password" name="password" id="password" placeholder='Your password' required />
