@@ -1,5 +1,5 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useRef, useState } from 'react';
 import app from '../firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ const auth = getAuth(app);
 const Login = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-
+    const emailRef = useRef();  //create reference   
     const handleLogin = event => {
         event.preventDefault();
         const from = event.target;
@@ -45,6 +45,24 @@ const Login = () => {
 
     };
 
+    const handleResetPassword = (event) => {
+        // console.log(emailRef.current);
+        // console.log(emailRef.current.value);
+        const email = emailRef.current.value;
+        if (!email) {
+            alert('Please provide your email address to res password');
+            return;
+        }
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert('Please check your email');
+            })
+            .catch(error => {
+                console.log(error);
+                setError(error.message);
+            });
+
+    };
 
     return (
         <div className='w-50 mx-auto'>
@@ -52,7 +70,7 @@ const Login = () => {
             <form onSubmit={handleLogin}>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                    <input type="email" name='email' className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
+                    <input type="email" name='email' ref={emailRef} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
@@ -65,7 +83,9 @@ const Login = () => {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
             <p className='text-danger'>{error}</p>
+            <p><small>Forget Password? Please<button onClick={handleResetPassword} className='btn btn-link'>Reset Password</button></small></p>
             <p><small>New to this website? Please <Link to='/register'>Register</Link></small></p>
+
         </div>
     );
 };

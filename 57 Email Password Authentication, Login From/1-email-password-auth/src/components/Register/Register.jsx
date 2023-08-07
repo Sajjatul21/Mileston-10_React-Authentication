@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
@@ -74,7 +74,6 @@ const Register = () => {
                 console.log(result);
                 alert('please verify your email');
             });
-
     };
 
     return (
