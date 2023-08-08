@@ -58,6 +58,7 @@ const Registration = () => {
         .then(userCredential => {
           const user = userCredential.user;
           console.log(user);
+          setError('');
         })
         .catch(error => {
           const errorCode = error.code;
