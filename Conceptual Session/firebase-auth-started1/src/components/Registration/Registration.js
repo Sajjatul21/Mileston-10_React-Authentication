@@ -2,6 +2,48 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Registration = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  console.log(name);
+  console.log(email);
+  console.log(password);
+
+  const handleName = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleEmail = event => {
+    // console.log(event.target.value)  
+    // email validation regex
+    const test = /\S+@\S+\.\S+/.test(event.target.value);    /* (/  / -. দিয়ে বুঝায় এটা regular expression ) */
+    // console.log(test);  return true false
+    if (!test) {
+      setError('Please give a valid Email');
+      return;
+    }
+    setEmail(event.target.value);
+    setError('');
+  };
+
+  const handlePassword = event => {
+    if (!/(?=.{8,})/.test(event.target.value)) {
+      setError('Password must be 8 character');
+      return;
+    }
+    if (!/(?=.*[A-Z])/.test(event.target.value)) {
+      setError('password should have upper case');
+      return;
+    }
+    if (!/(?=.*[!#$%&?"])/.test(event.target.value)) {
+      setError('password should have special character');
+      return;
+    }
+    setError('');
+    setPassword(event.target.value);
+  };
+
   return (
     <div className="mt-5">
       <div className="main-container d-flex container justify-content-between align-items-center">
@@ -14,21 +56,21 @@ const Registration = () => {
         </div>
         <div className="register-form  w-100">
           <div className="input-box">
-            <p className="text-danger">{"error"}</p>
+            <p className="text-danger">{error}</p>
             <form action="">
-              <input
+              <input onBlur={handleName}
                 className="form-control p-3 m-2"
                 type="text"
                 placeholder="Enter your name"
                 required
               />
-              <input
+              <input onBlur={handleEmail}
                 className="form-control p-3 m-2"
                 type="email"
                 placeholder="Email"
                 required
               />
-              <input
+              <input onBlur={handlePassword}
                 className="form-control p-3 m-2"
                 type="password"
                 placeholder="password"
