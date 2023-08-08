@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import app from "../../Hook/firebaseConfig";
+import Swal from 'sweetalert2';
+
 
 
 
@@ -62,6 +64,11 @@ const Registration = () => {
           emailVerification();
           console.log(user);
           setError('');
+          Swal.fire(
+            'Good job!',
+            'You clicked the button!',
+            'success'
+          );
         })
         .catch(error => {
           const errorCode = error.code;
