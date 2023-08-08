@@ -1,10 +1,36 @@
-import React from 'react';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
+import app from '../../Hook/firebaseConfig';
+import Swal from 'sweetalert2';
 
 
 const ResetPassword = (props) => {
+    const [email, setEmail] = useState('');
+
+    const auth = getAuth(app);
+
+    const handleResetPassword = () => {
+
+        //reset password
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Password reset email sent!
+                // ..
+                props.onHide();
+                Swal.fire(
+                    'Please! go to your email address',
+                    'And Reset your password',
+                    "success"
+                );
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+    };
     return (
         <div>
             <Modal
@@ -15,19 +41,16 @@ const ResetPassword = (props) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Modal heading
+                        Forget Password
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </p>
+                    <h5 className='text-danger m-3'>Reset your password</h5>
+                    <input onBlur={(e) => setEmail(e.target.value)} type="email" placeholder='Email' className='form-control p-2 mt-3' />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
+                    {/*   <Button onClick={}>Close</Button> */}
+                    <Button onClick={handleResetPassword}>Update</Button>
                 </Modal.Footer>
             </Modal>
         </div>
