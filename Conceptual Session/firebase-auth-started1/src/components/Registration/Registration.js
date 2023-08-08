@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import app from "../../Hook/firebaseConfig";
 
 
@@ -57,6 +57,7 @@ const Registration = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
           const user = userCredential.user;
+          updateName();
           console.log(user);
           setError('');
         })
@@ -66,6 +67,20 @@ const Registration = () => {
           setError(errorMessage);
         });
     }
+
+  };
+
+  const updateName = () => {
+    updateProfile(auth.currentUser, {
+      displayName: name
+    })
+      .then(() => {
+        // Profile updated!
+        // ...
+      }).catch((error) => {
+        // An error occurred
+        // ...
+      });
 
   };
 
