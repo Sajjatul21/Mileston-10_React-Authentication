@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import app from "../../Hook/firebaseConfig";
+
+
 
 const Registration = () => {
+  const auth = getAuth(app);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  console.log(name);
+
+  /* console.log(name);
   console.log(email);
-  console.log(password);
+  console.log(password); */
 
   const handleName = (event) => {
     setName(event.target.value);
@@ -42,6 +48,24 @@ const Registration = () => {
     }
     setError('');
     setPassword(event.target.value);
+  };
+
+
+  const handleRegister = event => {
+    event.preventDefault();
+    if (name, email, password) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setError(errorMessage);
+        });
+    }
+
   };
 
   return (
@@ -86,7 +110,7 @@ const Registration = () => {
               <input className="p-2" type="checkbox" />{" "}
               <span className="mb-3">accept term & condition</span>
               <br />
-              <button
+              <button onClick={handleRegister}
                 type="submit"
                 className="btn btn-info p-3 w-50 mt-3 fw-bold text-white"
               >
