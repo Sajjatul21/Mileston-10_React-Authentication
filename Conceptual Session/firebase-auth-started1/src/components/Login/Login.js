@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from "../../Hook/firebaseConfig";
 import Swal from 'sweetalert2';
@@ -11,6 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   // console.log(email, password);
+
+  const navigate = useNavigate();
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
@@ -30,6 +33,7 @@ const Login = () => {
           'Good job!',
           'Login Success'
         );
+        navigate('/home');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -50,7 +54,7 @@ const Login = () => {
           />
         </div>
         <div className="register-form  w-100">
-          <p>{"error"}</p>
+          <p>{error}</p>
           <div className="input-box">
             <input onBlur={handleEmail}
               className="form-control p-3 m-2"
