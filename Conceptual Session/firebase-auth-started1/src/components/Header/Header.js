@@ -21,13 +21,13 @@ const Header = () => {
             <li className="nav-link items  ms-3 text-info fw-bolder">Login</li>
           </Link>
 
-          {/* <li
+          <li
             role="button"
             className="nav-link items  ms-3 text-info fw-bolder"
           >
             Logout
           </li>
- */}
+
           <Link to="/registration" className="text-decoration-none">
             <li className="nav-link items  ms-3 text-info fw-bolder">
               Registration
