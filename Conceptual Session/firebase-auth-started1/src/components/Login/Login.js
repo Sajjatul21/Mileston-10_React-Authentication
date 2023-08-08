@@ -1,7 +1,44 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import app from "../../Hook/firebaseConfig";
+import Swal from 'sweetalert2';
+
 
 const Login = () => {
+  const auth = getAuth(app);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  // console.log(email, password);
+
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePassword = event => {
+    setPassword(event.target.value);
+  };
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        // ...
+        Swal.fire(
+          'Good job!',
+          'Login Success'
+        );
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(errorMessage);
+      });
+
+  };
+
   return (
     <div className="mt-5">
       <div className="main-container d-flex container justify-content-between align-items-center">
@@ -15,12 +52,12 @@ const Login = () => {
         <div className="register-form  w-100">
           <p>{"error"}</p>
           <div className="input-box">
-            <input
+            <input onBlur={handleEmail}
               className="form-control p-3 m-2"
               type="email"
               placeholder="Email"
             />
-            <input
+            <input onBlur={handlePassword}
               className="form-control p-3 m-2"
               type="password"
               placeholder="password"
@@ -38,7 +75,7 @@ const Login = () => {
             <input className="p-2" type="checkbox" />{" "}
             <span className="mb-3 ">remember me </span>
             <br />
-            <button className="btn btn-info p-3 w-50 mt-3 fw-bold text-white">
+            <button onClick={handleLogin} className="btn btn-info p-3 w-50 mt-3 fw-bold text-white">
               Login
             </button>
           </div>
